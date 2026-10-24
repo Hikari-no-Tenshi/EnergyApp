@@ -1,0 +1,105 @@
+<resources>
+    <string name="app_name">Графік відключень</string>
+
+    <!-- Всі черги -->
+    <string name="all_queues">Всі черги</string>
+    <string name="choose_queue">Виберіть чергу</string>
+    <string name="today_queue">%1$s (Сьогодні)</string>
+
+    <!-- Помилки та повідомлення -->
+    <string name="no_schedules">Графіків на сервері не знайдено.</string>
+    <string name="no_today_schedules">На сьогодні графіків на сервері не знайдено.</string>
+    <string name="no_today_active_schedules">На сьогодні актуальних графіків на сервері не знайдено.</string>
+    <string name="connection_error">Помилка мережі: %1$s</string>
+    <string name="network_error">"Помилка з'єднання"</string>
+    <string name="try_again">Спробувати знову</string>
+    <string name="probably_off">МОЖЛИВО</string>
+    <string name="off">ВІДКЛЮЧЕННЯ</string>
+    <string name="card_queue">Черга: %1$s</string>
+    <string name="card_time">Час: %1$s - %2$s</string>
+
+    <!-- Аварійні черги -->
+    <string name="emergency_queues_panel_title">Черги ГАВ та СГАВ</string>
+    <string name="emergency_queues">Графіки аварійних відключень (ГАВ)</string>
+    <string name="emergency_queues_prefix">ГАВ %1$s</string>
+    <string name="emergency_special_queues">Спеціальні графіки аварійних відключень (СГАВ)</string>
+    <string name="emergency_special_queues_prefix">СГАВ %1$s</string>
+
+    <!-- Сповіщення -->
+    <string name="notification_title">Увага: Відключення електроенергії!</string>
+    <string name="notification_test_title">[ТЕСТ] Увага: Відключення електроенергії!</string>
+    <string name="notification_text">О %1$s буде відключено: %2$s</string>
+    <string name="notification_test_text">Через %1$sхв буде відключено: %2$s</string>
+    <string name="notification_channel_description">Сповіщення про планові відключення світла</string>
+    <string name="notification_enabled">Сповіщення увімкнено</string>
+    <string name="notification_warning">Без цього дозволу ви не отримуватимете попереджень</string>
+
+    <!-- Мої черги -->
+    <string name="my_queues_title">Мої черги</string>
+    <string name="no_my_queues">Ви ще не додали жодної черги в налаштуваннях</string>
+
+    <!-- Інформація про черги -->
+    <string name="queues_info_title">Інформація про черги</string>
+    <string name="queues_info_short_title">Інформація</string>
+    <string name="queues_search_title">Пошук черги за адресою</string>
+    <string name="filia_title">Дільниця:</string>
+    <string name="city_title">Населений пункт:</string>
+    <string name="street_title">Вулиця:</string>
+    <string name="house_title">Будинок:</string>
+    <string name="choose_address">Для перегляду інформації про черги відключень виберіть адресу.</string>
+    <string name="gpv_url_label">Повний перелік черг ГПВ (PDF)</string>
+    <string name="gav_url_label">Повний перелік черг ГАВ (PDF)</string>
+    <string name="searching">Пошук...</string>
+
+    <!-- PDF -->
+    <string name="pdf_downloaded">Файл збережено в Завантаження</string>
+
+    <!-- Інформація про відключення -->
+    <string name="poweroff_info_title">Відключення</string>
+    <string name="poweroff_search_title">Пошук відключення за адресою</string>
+    <string name="choose_poweroff_address">Для перегляду інформації про відключення виберіть адресу.</string>
+    <string name="no_poweroff">Відключень не знайдено.</string>
+    <string name="saved_addresses_label">Збережені адреси</string>
+    <string name="choose_from_saved">Виберіть збережену адресу</string>
+    <string name="address_saved_toast">Адресу додано до вибраного</string>
+    <string name="address_deleted_toast">Адресу видалено з вибраного</string>
+    <string name="add_address">Додати адресу до вибраного</string>
+    <string name="remove_address">Видалити адресу з вибраного</string>
+    <string name="poweroff_type_plan">Планове</string>
+    <string name="poweroff_type_emergency">Аварійне</string>
+    <string name="poweroff_type_gao">Графік відключень </string>
+    <string name="poweroff_info_title_with_address">Відключення для %1$s</string>
+    <string name="poweroff_period">Період відключень</string>
+    <string name="date_from">з</string>
+    <string name="date_to">по</string>
+
+    <!-- Налаштування -->
+    <string name="settings_title">Налаштування</string>
+    <string name="settings_choose_my_queues">Виберіть свої черги</string>
+    <string name="settings_add_my_queues">Додати свої черги</string>
+    <string name="settings_my_queues">Мої черги</string>
+    <string name="settings_no_queues">Черги не вибрані</string>
+    <string name="settings_selected_queues">Вибрані черги: %1$s</string>
+    <string name="settings_all_queues">Всі черги</string>
+    <string name="settings_done">Готово</string>
+    <string name="settings_cancel">Скасувати</string>
+    <string name="settings_navigation_title">Навігація</string>
+    <string name="settings_start_screen">Вибір стартового екрану</string>
+    <string name="settings_filter">Фільтрація</string>
+    <string name="settings_active_only_title">Приховувати минулі відключення</string>
+    <string name="settings_active_only_description">Показувати тільки ті графіки, час яких ще не минув.</string>
+    <string name="settings_notification_title">Сповіщення</string>
+    <string name="settings_volume">Гучність сповіщення: %1$d%%</string>
+    <string name="settings_volume_description">Звук пролунає навіть у режимі \"Не турбувати\"</string>
+    <string name="settings_battery_optimization_title">Вимкнути оптимізацію батареї</string>
+    <string name="settings_battery_optimization_description">Це дозволить додатку працювати у фоні без обмежень, щоб забезпечити отримання сповіщень про відключення електроенергії.\n1. Перейдіть в Налаштування.\n2. знайдіть додаток "Графік відключень".\n3. Вимкніть оптимізацію батареї.</string>
+    <string name="settings_background_startup_title">Ввімкнути автозапуск у фоні</string>
+    <string name="settings_background_startup_description">Це дозволить додатку автоматично запускатись у фоні, щоб забезпечити отримання сповіщень про відключення електроенергії.\n1. Перейдіть в Налаштування.\n2. знайдіть додаток "Графік відключень".\n3. Ввімкніть автозапуск.</string>
+    <string name="settings_notification_test_title">Тестування сповіщень</string>
+    <string name="settings_notification_test_description">Запланувати тестове сповіщення:</string>
+    <string name="settings_notification_test_time">%1$dхв</string>
+    <string name="settings_notification_test_toast">Сповіщення через %1$d хв</string>
+    <string name="settings_alert_time_title">Час попередження про відключення</string>
+    <string name="settings_alert_time_description">Попередження спрацює за: %1$d хв</string>
+    <string name="settings_alert_time_value">%1$d хвилин</string>
+</resources>
