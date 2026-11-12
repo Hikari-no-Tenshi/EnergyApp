@@ -268,7 +268,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                @OptIn(ExperimentalLayoutApi::class)
                 @Composable
                 fun EmergencySection(queues: List<EmergencyQueue>) {
                     Column(
@@ -320,7 +319,6 @@ class MainActivity : ComponentActivity() {
                     }
                 }
 
-                @OptIn(ExperimentalLayoutApi::class)
                 @Composable
                 fun EmergencySpecialSection(queues: List<EmergencySpecialQueue>) {
                     Column(
@@ -1124,15 +1122,14 @@ fun isToday(dateString: String): Boolean {
 // Допоміжна функція для фільтра "Тільки актуальні"
 private val timeFormatter = DateTimeFormatter.ofPattern("HH:mm:ss")
 fun isPast(end: String): Boolean {
-    if (end == "00:00:00") return false // Останній слот доби вважаємо актуальним до кінця
-    return try {
+    return end != "00:00:00" && try {
         val now = LocalTime.now()
         val e = LocalTime.parse(end, timeFormatter)
         now.isAfter(e)
     } catch (e: Exception) {
         Log.e(TAG, "Error in isPast", e)
         false
-    }
+    } // Останній слот доби вважаємо актуальним до кінця
 }
 
 fun Context.readAssetFile(fileName: String): String {

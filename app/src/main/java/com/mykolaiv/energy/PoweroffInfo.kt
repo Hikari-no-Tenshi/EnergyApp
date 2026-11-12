@@ -663,7 +663,6 @@ data class PoweroffTypeUI(
     val icon: ImageVector
 )
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DatePickerField(
     label: String,
