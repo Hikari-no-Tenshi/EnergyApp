@@ -578,7 +578,7 @@ private fun playPreviewSound(context: Context, volume: Float) {
         mediaPlayer.setAudioAttributes(audioAttributes) // Встановлюємо атрибути ДО підготовки
 
         // Вказуємо шлях до файлу через дескриптор ресурсу
-        val assetFileDescriptor = context.resources.openRawResourceFd(R.raw.notification)
+        val assetFileDescriptor = context.resources.openRawResourceFd(R.raw.notification_off)
         mediaPlayer.setDataSource(
             assetFileDescriptor.fileDescriptor,
             assetFileDescriptor.startOffset,

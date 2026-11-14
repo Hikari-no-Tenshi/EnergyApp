@@ -126,11 +126,11 @@ private fun sendNotification(context: Context, isTest: Boolean, queueName: Strin
     val notificationTitle: String
     val notificationText: String
     if (isTest) {
-        notificationTitle = context.getString(R.string.notification_test_title)
-        notificationText = context.getString(R.string.notification_test_text, startTime, queueName)
+        notificationTitle = context.getString(R.string.notification_off_test_title)
+        notificationText = context.getString(R.string.notification_off_test_text, startTime, queueName)
     } else {
-        notificationTitle = context.getString(R.string.notification_title)
-        notificationText = context.getString(R.string.notification_text, startTime, queueName)
+        notificationTitle = context.getString(R.string.notification_off_title)
+        notificationText = context.getString(R.string.notification_off_text, startTime, queueName)
     }
 
     val builder = NotificationCompat.Builder(context, "OUTAGE_NOTIFICATIONS").apply {
@@ -176,7 +176,7 @@ private fun playPowerOffAlert(context: Context, volume: Float) {
         mediaPlayer.setAudioAttributes(audioAttributes)
 
         // 3. Вказуємо джерело звуку через FileDescriptor ресурсу
-        val afd = context.resources.openRawResourceFd(R.raw.notification)
+        val afd = context.resources.openRawResourceFd(R.raw.notification_off)
         mediaPlayer.setDataSource(afd.fileDescriptor, afd.startOffset, afd.length)
         afd.close()
 

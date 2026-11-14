@@ -26,10 +26,12 @@
     <string name="emergency_special_queues_prefix">СГАВ %1$s</string>
 
     <!-- Сповіщення -->
-    <string name="notification_title">Увага: Відключення електроенергії!</string>
-    <string name="notification_test_title">[ТЕСТ] Увага: Відключення електроенергії!</string>
-    <string name="notification_text">О %1$s буде відключено: %2$s</string>
-    <string name="notification_test_text">Через %1$sхв буде відключено: %2$s</string>
+    <string name="notification_off_title">Увага: Відключення електроенергії!</string>
+    <string name="notification_off_test_title">[ТЕСТ] Увага: Відключення електроенергії!</string>
+    <string name="notification_off_text">О %1$s буде відключено: %2$s</string>
+    <string name="notification_off_test_text">Через %1$sхв буде відключено: %2$s</string>
+    <string name="notification_change_title">Увага: Графіки відключень змінилися!</string>
+    <string name="notification_change_text">Оновлено графіки для вибраних черг. Перегляньте актуальний розклад.</string>
     <string name="notification_channel_description">Сповіщення про планові відключення світла</string>
     <string name="notification_enabled">Сповіщення увімкнено</string>
     <string name="notification_warning">Без цього дозволу ви не отримуватимете попереджень</string>

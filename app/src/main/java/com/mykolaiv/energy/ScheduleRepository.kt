@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
 import java.time.LocalDate
 import java.time.LocalDateTime
+import java.security.MessageDigest
 
 /** Дані про найближчий початок безперервного блоку відключення. */
 data class UpcomingOutage(
@@ -21,11 +22,27 @@ data class UpcomingOutage(
 class ScheduleRepository(private val context: Context) {
     private val apiService = ApiService.create()
 
+    /** Підпис графіка: враховує лише сьогоднішні інтервали, а не лише майбутні початки. */
+    data class ScheduleState(val outages: List<UpcomingOutage>, val fingerprint: String)
+
+    suspend fun getScheduleState(
+        queueIds: Set<Int>,
+        from: LocalDateTime = LocalDateTime.now()
+    ): ScheduleState {
+        if (queueIds.isEmpty()) return ScheduleState(emptyList(), "")
+        return loadSchedule(queueIds, from)
+    }
+
     suspend fun getUpcomingOutages(
         queueIds: Set<Int>,
         from: LocalDateTime = LocalDateTime.now()
-    ): List<UpcomingOutage> {
-        if (queueIds.isEmpty()) return emptyList()
+    ): List<UpcomingOutage> = getScheduleState(queueIds, from).outages
+
+    private suspend fun loadSchedule(
+        queueIds: Set<Int>,
+        from: LocalDateTime = LocalDateTime.now()
+    ): ScheduleState {
+        if (queueIds.isEmpty()) return ScheduleState(emptyList(), "")
 
         val activeOutageWrappers: List<ActiveOutage>
         val timesList: List<TimeSeries>
@@ -70,7 +87,26 @@ class ScheduleRepository(private val context: Context) {
             }
         }
 
-        return myOutages
+        // Неповні дані API не повинні трактуватися як скасування відключень.
+        require(myOutages.all { timesMap.containsKey(it.timeSeriesId) }) {
+            "Missing time series for selected outages"
+        }
+
+        // Порівнюємо лише сьогоднішній графік. Завтрашні відключення
+        // залишаються в myOutages для планування попереджень, але не впливають
+        // на сповіщення про зміни сьогоднішнього графіка.
+        // Порядок відповіді API та службові ID не впливають на підпис.
+        val canonical = myOutages.mapNotNull { item ->
+            val date = item.dateTo?.take(10) ?: return@mapNotNull null
+            if (date != today.toString()) return@mapNotNull null
+            val time = timesMap[item.timeSeriesId] ?: return@mapNotNull null
+            "${item.outageQueueId}|$date|${time.start}|${time.end}|${item.type}"
+        }.distinct().sorted().joinToString("\n")
+        val fingerprint = MessageDigest.getInstance("SHA-256")
+            .digest(canonical.toByteArray(Charsets.UTF_8))
+            .joinToString("") { "%02x".format(it) }
+
+        val upcoming = myOutages
             .groupBy { it.outageQueueId }
             .flatMap { (queueId, items) ->
                 val sortedItems = items.sortedBy { item ->
@@ -90,6 +126,7 @@ class ScheduleRepository(private val context: Context) {
                 }
             }
             .sortedBy { it.startDateTime }
+        return ScheduleState(upcoming, fingerprint)
     }
 
     suspend fun findNextOutage(
