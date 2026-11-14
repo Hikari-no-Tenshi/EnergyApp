@@ -31,6 +31,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import kotlinx.coroutines.launch
+import kotlin.math.roundToInt
 import androidx.navigation.NavController
 import kotlinx.coroutines.CoroutineScope
 
@@ -511,39 +512,52 @@ fun SettingSectionTitle(text: String) {
 
 @Composable
 fun VolumeSettingItem(context: Context, settingsManager: SettingsManager) {
-    //val context = LocalContext.current
     // Збираємо значення з DataStore
     val volume by settingsManager.notificationVolume.collectAsState(initial = 0.5f)
     val scope = rememberCoroutineScope()
+    var sliderVolume by remember { mutableFloatStateOf(volume) }
+
+    // Синхронізуємо повзунок зі збереженим значенням.
+    LaunchedEffect(volume) {
+        sliderVolume = volume
+    }
+
+    fun changeVolume(newVolume: Float, playSound: Boolean = false) {
+        val adjusted = newVolume.coerceIn(0f, 1f)
+        sliderVolume = adjusted
+        scope.launch {
+            settingsManager.saveVolume(adjusted)
+        }
+        if (playSound) playPreviewSound(context, adjusted)
+    }
 
     Column(
         modifier = Modifier
             .fillMaxWidth()
-            //.padding(16.dp)
             .padding(vertical = 8.dp)
     ) {
         Text(
-            text = stringResource(R.string.settings_volume, (volume * 100).toInt()),
+            text = stringResource(R.string.settings_volume, (sliderVolume * 100).roundToInt()),
             style = MaterialTheme.typography.titleMedium
         )
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.VolumeMute,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
+            IconButton(onClick = {
+                val percent = (sliderVolume * 100).roundToInt()
+                changeVolume((percent - 1).coerceAtLeast(0) / 100f, playSound = true)
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.VolumeMute,
+                    contentDescription = "Зменшити гучність на 1%",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
 
             Slider(
-                value = volume,
-                onValueChange = { newValue ->
-                    // Використовуємо scope для запуску suspend функції збереження
-                    scope.launch {
-                        settingsManager.saveVolume(newValue)
-                    }
-                },
+                value = sliderVolume,
+                onValueChange = { changeVolume(it) },
                 onValueChangeFinished = {
-                    playPreviewSound(context, volume)
+                    playPreviewSound(context, sliderVolume)
                 },
                 modifier = Modifier
                     .weight(1f)
@@ -551,11 +565,16 @@ fun VolumeSettingItem(context: Context, settingsManager: SettingsManager) {
                 valueRange = 0f..1f
             )
 
-            Icon(
-                imageVector = Icons.AutoMirrored.Filled.VolumeUp,
-                contentDescription = null,
-                modifier = Modifier.size(24.dp)
-            )
+            IconButton(onClick = {
+                val percent = (sliderVolume * 100).roundToInt()
+                changeVolume((percent + 1).coerceAtMost(100) / 100f, playSound = true)
+            }) {
+                Icon(
+                    imageVector = Icons.AutoMirrored.Filled.VolumeUp,
+                    contentDescription = "Збільшити гучність на 1%",
+                    modifier = Modifier.size(24.dp)
+                )
+            }
         }
 
         Text(
