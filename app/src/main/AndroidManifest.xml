@@ -44,6 +44,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppMainTheme">
+        <receiver
+            android:name=".NotificationSoundReceiver"
+            android:exported="false" />
         <receiver android:name=".AlarmReceiver"
             android:enabled="true"
             android:exported="false" />

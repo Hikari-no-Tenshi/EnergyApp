@@ -5,6 +5,7 @@ import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.Context
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.media.AudioAttributes
 import android.media.RingtoneManager
@@ -96,6 +97,7 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         val splashScreen = installSplashScreen()
         super.onCreate(savedInstanceState)
+        handleNotificationIntent(intent)
         settingsManager = SettingsManager(this)
 
         // 1. Створюємо канал (завжди)
@@ -741,6 +743,26 @@ class MainActivity : ComponentActivity() {
                 getSystemService(NOTIFICATION_SERVICE) as NotificationManager
             notificationManager.createNotificationChannel(channel)
         }
+    }
+
+    private fun handleNotificationIntent(intent: Intent?) {
+        if (intent?.action != "com.mykolaiv.energy.NOTIFICATION_OPEN") {
+            return
+        }
+
+        if (!intent.hasExtra("notification_id")) {
+            return
+        }
+
+        val notificationId = intent.getIntExtra("notification_id", 0)
+
+        NotificationSoundController.stop(notificationId)
+    }
+
+    override fun onNewIntent(intent: Intent) {
+        super.onNewIntent(intent)
+        setIntent(intent)
+        handleNotificationIntent(intent)
     }
 }
 

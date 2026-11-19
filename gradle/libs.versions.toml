@@ -1,6 +1,6 @@
 [versions]
 accompanistSystemuicontroller = "0.36.0"
-agp = "9.5.0"
+agp = "9.5.1"
 converterGson = "3.0.0"
 coreKtx = "1.18.0"
 coreSplashscreen = "1.2.0"
